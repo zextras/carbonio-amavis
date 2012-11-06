@@ -13,37 +13,6 @@
   <description>SOAP Service</description>
   
   <filter>
-    <filter-name>DoSFilter</filter-name>
-    <filter-class>com.zimbra.cs.servlet.DoSFilter</filter-class>
-
-    <init-param>
-     <param-name>delayMs</param-name>
-     <param-value>-1</param-value>
-    </init-param>
-
-    <init-param>
-     <param-name>remotePort</param-name>
-     <param-value>true</param-value>
-    </init-param>
-    
-    <init-param>
-     <param-name>ipWhitelist</param-name>
-     <param-value>%%zimbraLocalBindAddress%%</param-value>
-    </init-param>
-    
-    <init-param>
-     <param-name>maxRequestMs</param-name>
-     <param-value>9223372036854775807</param-value>
-    </init-param>    
-    
-  </filter>
-  
-  <filter-mapping>
-    <filter-name>DoSFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  
-  <filter>
     <filter-name>ZimbraQoSFilter</filter-name>
     <filter-class>com.zimbra.cs.servlet.ZimbraQoSFilter</filter-class>
   </filter>
@@ -80,7 +49,7 @@
   
   <filter>
     <filter-name>GzipFilter</filter-name>
-    <filter-class>org.eclipse.jetty.servlets.IncludableGzipFilter</filter-class>
+    <filter-class>org.mortbay.servlet.jetty.IncludableGzipFilter</filter-class>
 
     <init-param>
       <param-name>mimeTypes</param-name>
@@ -180,7 +149,11 @@
       <param-name>engine.handler.1</param-name>
       <param-value>com.zimbra.cs.service.mail.MailService</param-value>
     </init-param>
-    <load-on-startup>2</load-on-startup>
+    <init-param>
+      <param-name>engine.handler.2</param-name>
+      <param-value>com.zimbra.cs.service.im.IMService</param-value>
+    </init-param>
+    <load-on-startup>3</load-on-startup>
   </servlet>
 
   <servlet>
@@ -203,16 +176,11 @@
       <param-name>engine.handler.2</param-name>
       <param-value>com.zimbra.cs.service.mail.MailService</param-value>
     </init-param>
-    <load-on-startup>3</load-on-startup>
-  </servlet>
-
-  <servlet>
-    <servlet-name>WsdlServlet</servlet-name>
-    <servlet-class>com.zimbra.soap.WsdlServlet</servlet-class>
     <init-param>
-      <param-name>allowed.ports</param-name>
-      <param-value>%%zimbraMailPort%%, %%zimbraMailSSLPort%%, %%zimbraAdminPort%%, 7070, 7443, 7071</param-value>
+      <param-name>engine.handler.3</param-name>
+      <param-value>com.zimbra.cs.service.im.IMService</param-value>
     </init-param>
+    <load-on-startup>4</load-on-startup>
   </servlet>
 
   <servlet>
@@ -253,16 +221,6 @@
     <load-on-startup>5</load-on-startup>
   </servlet>
   
-  <servlet>
-    <servlet-name>ExternalUserProvServlet</servlet-name>
-    <servlet-class>com.zimbra.cs.service.ExternalUserProvServlet</servlet-class>
-    <init-param>
-      <param-name>allowed.ports</param-name>
-      <param-value>%%zimbraMailPort%%, %%zimbraMailSSLPort%%, %%zimbraAdminPort%%, 7070, 7443, 7071</param-value>
-    </init-param>
-    <load-on-startup>5</load-on-startup>
-  </servlet>
-
   <!-- HTTPSCLIENTCERTBEGIN %%uncomment VAR:zimbraMailSSLClientCertPort,-->,0%%
   <servlet>
     <servlet-name>CertAuthServlet</servlet-name>
@@ -338,16 +296,6 @@
     </init-param>
     <load-on-startup>9</load-on-startup>
   </servlet>
-  
-  <servlet>
-    <servlet-name>DavWellKnownServlet</servlet-name>
-    <servlet-class>com.zimbra.cs.dav.service.DavWellKnownServlet</servlet-class>
-    <init-param>
-      <param-name>allowed.ports</param-name>
-      <param-value>%%zimbraMailPort%%, %%zimbraMailSSLPort%%, 7070</param-value>
-    </init-param>
-    <load-on-startup>9</load-on-startup>
-  </servlet>
 
   <servlet>
     <servlet-name>CollectLDAPConfigZimbra</servlet-name>
@@ -409,16 +357,6 @@
     <servlet-class>com.zimbra.cs.servlet.RobotsServlet</servlet-class>
     <load-on-startup>11</load-on-startup>
   </servlet>
-  
-  <servlet>
-    <servlet-name>AutoDiscoverServlet</servlet-name>
-    <servlet-class>com.zimbra.cs.service.AutoDiscoverServlet</servlet-class>
-    <init-param>
-      <param-name>allowed.ports</param-name>
-      <param-value>80, 443, 7070, 7071, 7443</param-value>
-    </init-param>
-    <load-on-startup>12</load-on-startup>
-  </servlet>
 
   <servlet-mapping>
     <servlet-name>ExtensionDispatcherServlet</servlet-name>
@@ -433,11 +371,6 @@
   <servlet-mapping>
     <servlet-name>AdminServlet</servlet-name>
     <url-pattern>/admin/soap/*</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>WsdlServlet</servlet-name>
-    <url-pattern>/wsdl/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
@@ -470,11 +403,6 @@
     <url-pattern>/preauth</url-pattern>
   </servlet-mapping>
   
-  <servlet-mapping>
-    <servlet-name>ExternalUserProvServlet</servlet-name>
-    <url-pattern>/extuserprov/*</url-pattern>
-  </servlet-mapping>
-
   <!-- HTTPSCLIENTCERTBEGIN %%uncomment VAR:zimbraMailSSLClientCertPort,-->,0%%
   <servlet-mapping>
     <servlet-name>CertAuthServlet</servlet-name>
@@ -531,11 +459,6 @@
     <servlet-name>DavServlet</servlet-name>
     <url-pattern>/dav/*</url-pattern>
   </servlet-mapping>
-  
-  <servlet-mapping>
-    <servlet-name>DavWellKnownServlet</servlet-name>
-    <url-pattern>/.well-known/*</url-pattern>
-  </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>ZimletResources</servlet-name>
@@ -545,11 +468,6 @@
   <servlet-mapping>
     <servlet-name>RobotsServlet</servlet-name>
     <url-pattern>/robots.txt</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>AutoDiscoverServlet</servlet-name>
-    <url-pattern>/autodiscover/*</url-pattern>
   </servlet-mapping>
 
   <!-- HTTPSBEGIN %%comment VAR:zimbraMailMode,-->,https,redirect%%
