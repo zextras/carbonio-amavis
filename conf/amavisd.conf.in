@@ -384,7 +384,7 @@ $banned_filename_re = new_RE(
 
 @decoders = (
   ['mail', \&do_mime_decode],
-  [[qw(asc uue hqx ync)], \&do_ascii],  # not safe
+#  [[qw(asc uue hqx ync)], \&do_ascii],  # not safe
   ['F',    \&do_uncompress, ['unfreeze', 'freeze -d', 'melt', 'fcat'] ],
   ['Z',    \&do_uncompress, ['uncompress', 'gzip -d', 'zcat'] ],
   ['gz',   \&do_uncompress, 'gzip -d'],
