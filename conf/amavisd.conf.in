@@ -267,7 +267,7 @@ $archive_quarantine_to = undef;
 
 $banned_filename_re = new_RE(
   # banned extension - basic
-  %%uncomment VAR:zimbraMtaBlockedExtension%%qr'.\.(%%list VAR:zimbraMtaBlockedExtension |%%)$'i,
+  %%uncomment VAR:zimbraMtaBlockedExtension%%qr{.\.(?:%%list VAR:zimbraMtaBlockedExtension |%%)\s*$}i,
 ### BLOCKED ANYWHERE
 # qr'^UNDECIPHERABLE$',  # is or contains any undecipherable components
 #  qr'^\.(exe-ms|dll)$',                   # banned file(1) types, rudimentary
