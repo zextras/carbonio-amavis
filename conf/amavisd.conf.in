@@ -26,6 +26,7 @@ $default_ldap = {
 	hostname      => [ split (' ','@@ldap_url@@') ],
 	timeout       => 30,
 	tls           => @@ldap_starttls_supported@@,
+	sslversion    => '@@amavis_sslversion@@',
 	query_filter  => '(&(objectClass=amavisAccount)(zimbraMailStatus=enabled)(|(mail=%m)(zimbraDomainName=%m)))',
 	bind_dn       => 'uid=zmamavis,cn=appaccts,cn=zimbra',
 	bind_password => '@@ldap_amavis_password@@',
