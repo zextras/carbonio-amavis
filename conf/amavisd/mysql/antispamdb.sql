@@ -1,14 +1,17 @@
+-- SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
+--
+-- SPDX-License-Identifier: AGPL-3.0-only
 
 CREATE DATABASE zimbra_antispam;
 ALTER DATABASE zimbra_antispam DEFAULT CHARACTER SET utf8;
 
 USE zimbra_antispam;
 
-GRANT ALL ON zimbra_antispam.* TO 'zimbra' IDENTIFIED BY 'zimbra';
-GRANT ALL ON zimbra_antispam.* TO 'zimbra'@'127.0.0.1' IDENTIFIED BY 'zimbra';
-GRANT ALL ON zimbra_antispam.* TO 'zimbra'@'localhost' IDENTIFIED BY 'zimbra';
-GRANT ALL ON zimbra_antispam.* TO 'zimbra'@'localhost.localdomain' IDENTIFIED BY 'zimbra';
-GRANT ALL ON zimbra_antispam.* TO 'root'@'localhost.localdomain' IDENTIFIED BY 'zimbra';
+GRANT ALL ON zimbra_antispam.* TO 'zextras' IDENTIFIED BY 'zextras';
+GRANT ALL ON zimbra_antispam.* TO 'zextras'@'127.0.0.1' IDENTIFIED BY 'zextras';
+GRANT ALL ON zimbra_antispam.* TO 'zextras'@'localhost' IDENTIFIED BY 'zextras';
+GRANT ALL ON zimbra_antispam.* TO 'zextras'@'localhost.localdomain' IDENTIFIED BY 'zextras';
+GRANT ALL ON zimbra_antispam.* TO 'root'@'localhost.localdomain' IDENTIFIED BY 'zextras';
 
 
 CREATE TABLE bayes_expire (
