@@ -402,7 +402,7 @@ $banned_filename_re = new_RE(
            # ['/usr/local/heirloom/usr/5bin/pax', 'pax', 'gcpio', 'cpio']
   ['deb',  \&do_ar, 'ar'],
 # ['a',    \&do_ar, 'ar'],  # unpacking .a seems an overkill
-  ['rar',  \&do_unrar, ['unrar', 'rar'] ],
+  ['rar',  \&do_7zip, ['7z'] ],
   ['arj',  \&do_unarj, ['unarj', 'arj'] ],
   ['arc',  \&do_arc,   ['nomarch', 'arc'] ],
   ['zoo',  \&do_zoo,   ['zoo', 'unzoo'] ],
@@ -419,7 +419,7 @@ $banned_filename_re = new_RE(
            \&do_7zip,  ['7za', '7z'] ],
   [[qw(xz lzma jar cpio arj rar swf lha iso cab deb rpm)],
            \&do_7zip,  '7z' ],
-  ['exe',  \&do_executable, ['unrar','rar'], 'lha', ['unarj','arj'] ],
+  ['exe',  \&do_executable, ['7z'], 'lha', ['unarj','arj'] ],
 );
 
 
