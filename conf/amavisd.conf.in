@@ -9,7 +9,7 @@ use strict;
 
 # COMMONLY ADJUSTED SETTINGS:
 
-%%comment SERVICE:antivirus%% @bypass_virus_checks_maps = (1);  # uncomment to DISABLE anti-virus code
+#@bypass_virus_checks_maps = (1);  # uncomment to DISABLE anti-virus code
 %%comment SERVICE:antispam%% @bypass_spam_checks_maps  = (1);  # uncomment to DISABLE anti-spam code
 # $bypass_decode_parts = 1;         # controls running of decoders&dearchivers
 
@@ -447,10 +447,16 @@ $banned_filename_re = new_RE(
 # settings for the SAVAPI3.conf: ArchiveScan=1, HeurLevel=2, MailboxScan=1
 
 # ### http://www.clamav.net/
- ['ClamAV-clamd',
-   \&ask_daemon, ["CONTSCAN {}\n", '/opt/zextras/data/clamav/clamav.sock'],
-   qr/\bOK$/m, qr/\bFOUND$/m,
-   qr/^.*?: (?!Infected Archive)(.*) FOUND$/m ],
+   ['ClamAV-remote-stream',
+    \&ask_daemon, [
+      "{}/*",
+      [
+        'clamd:127.78.0.17:20000'
+      ],
+    ],
+    qr/\bOK$/m, qr/\bFOUND$/m,
+    qr/^.*?: (?!Infected Archive)(.*) FOUND$/m
+  ],
 # # NOTE: run clamd under the same user as amavisd, or run it under its own
 # #   uid such as clamav, add user clamav to the amavis group, and then add
 # #   AllowSupplementaryGroups to clamd.conf;
