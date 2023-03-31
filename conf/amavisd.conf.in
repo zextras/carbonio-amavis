@@ -9,7 +9,7 @@ use strict;
 
 # COMMONLY ADJUSTED SETTINGS:
 
-#@bypass_virus_checks_maps = (1);  # uncomment to DISABLE anti-virus code
+%%uncomment VAR:carbonioAmavisDisableVirusCheck%% @bypass_virus_checks_maps = (1);  # uncomment to DISABLE anti-virus code
 %%comment SERVICE:antispam%% @bypass_spam_checks_maps  = (1);  # uncomment to DISABLE anti-spam code
 # $bypass_decode_parts = 1;         # controls running of decoders&dearchivers
 
