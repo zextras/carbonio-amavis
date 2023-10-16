@@ -819,6 +819,12 @@ $banned_filename_re = new_RE(
 
 @av_scanners_backup = (
 
+# fallback to local socket(if available) when all other scanners failed.
+  ['ClamAV-clamd',
+   \&ask_daemon, ["CONTSCAN {}\n", '/opt/zextras/data/clamav/clamav.sock'],
+   qr/\bOK$/m, qr/\bFOUND$/m,
+   qr/^.*?: (?!Infected Archive)(.*) FOUND$/m ],
+
   ### http://www.clamav.net/   - backs up clamd or Mail::ClamAV
   ['ClamAV-clamscan', 'clamscan',
     "--stdout --no-summary -r --tempdir=$TEMPBASE {}",
