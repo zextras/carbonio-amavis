@@ -824,7 +824,7 @@ $banned_filename_re = new_RE(
 
 # fallback to local socket(if available) when all other scanners failed.
   ['ClamAV-clamd',
-   \&ask_daemon, ["CONTSCAN {}\n", '/opt/zextras/data/clamav/clamav.sock'],
+   \&ask_daemon, ["CONTSCAN {}\n", '/run/carbonio/clamd.socket'],
    qr/\bOK$/m, qr/\bFOUND$/m,
    qr/^.*?: (?!Infected Archive)(.*) FOUND$/m ],
 
